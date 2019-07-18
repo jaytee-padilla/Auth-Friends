@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Link, Redirect } from 'react-router-dom';
 import Login from './components/Login';
+import Profile from './components/Profile';
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
 			</div>
 
 			<Route exact path="/" component={Login} />
-			<Route exact path="/profile" />
+			<Route exact path="/profile" component={Profile} />
     </div>
   );
 }

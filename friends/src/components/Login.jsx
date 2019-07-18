@@ -1,20 +1,21 @@
 import React from 'react';
 import { withFormik, Form, Field} from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios';
 import './styles.css';
 
 function Login({ touched, errors }) {
 	return (
 		<Form className="form">
 			<div className="form-group">
-				<label className="label">Email</label>
+				<label className="label">Username</label>
 				<Field
 					className="input"
-					name="email"
-					type="email"
+					name="username"
+					type="text"
 					autoComplete="off"
 				/>
-				<p className="error">{touched.email && errors.email}</p>
+				<p className="error">{touched.username && errors.username}</p>
 			</div>
 			<div className="form-group">
 				<label className="label">Password</label>
@@ -35,17 +36,27 @@ function Login({ touched, errors }) {
 export default withFormik({
 	mapPropsToValues() {
 		return {
-			email: "",
+			username: "",
 			password: ""
 		};
 	},
 
 	validationSchema: Yup.object().shape({
-		email: Yup.string().email().required(),
+		username: Yup.string().required(),
 		password: Yup.string().required()
 	}),
 
-	handleSubmit: (values, formikBag) => {
-		console.log("submitted")
+	handleSubmit: (values, {resetForm}) => {
+		console.log(values);
+
+		const url = "http://localhost:5000/api/login";
+		axios.post(url, values)
+			.then(response => {
+				console.log(response.data)
+				localStorage.setItem("token", response.data.payload);
+			})
+			.catch(error => console.log(error.response.data))
+
+		resetForm();
 	},
 })(Login);
