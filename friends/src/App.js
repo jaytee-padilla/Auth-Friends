@@ -1,24 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Link, Redirect } from 'react-router-dom';
+import Login from './components/Login';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" style={{padding: "30px"}}>
+			<div>
+				<Link to="/" className="btn" style={{marginRight: "20px", textDecoration: "none"}}>Login</Link>
+				<Link to="/profile" className="btn" style={{textDecoration: "none"}}>Profile</Link>
+			</div>
+
+			<Route exact path="/" component={Login} />
+			<Route exact path="/profile" />
     </div>
   );
 }
